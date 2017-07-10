@@ -8,6 +8,15 @@ https://github.com/direnv/direnv
 
 posh-direnv is an environment switcher for the PowerShell. It executes ".psdirenv" in the current directory. You can easily set unique environment variables for each directory.
 
+==============
+How to install
+==============
+You can install from PowerShell Gallery. `posh-direnv <https://www.powershellgallery.com/packages/posh-direnv>`_
+
+.. code-block:: posh
+
+   $ Install-Module -Name posh-direnv
+
 =====
 Usage
 =====
