@@ -1,0 +1,2 @@
+write-Host "Hello .psenvrc"
+(
