@@ -38,7 +38,7 @@ function Edit-DirEnvRc {
     
     $t = Get-ItemPropertyValue -Path $p -Name LastWriteTime
 
-    if (Test-Path "$env:EDITOR") {
+    if ("$env:EDITOR" -and (Test-Path "$env:EDITOR")) {
         &"$env:EDITOR" $p
         $t2 = Get-ItemPropertyValue -Path $p -Name LastWriteTime
 
