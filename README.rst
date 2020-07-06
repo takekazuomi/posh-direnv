@@ -47,5 +47,4 @@ Once you exit the directory and move again. .psdirenv will not be executed. Re-e
 
 Note
 ====
-1. It does not support unload. Please note that changes to environment variables are cumulative.
-2. ".psdirenv" is executed unconditionally. Please be aware that it may contain malicious code. Basically it is recommended not to put it in the public repository such as github.
+1. ".psdirenv" is executed unconditionally. Please be aware that it may contain malicious code. Basically it is recommended not to put it in the public repository such as github.

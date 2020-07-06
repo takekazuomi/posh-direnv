@@ -1,7 +1,10 @@
+
+## Load Scripts ###############################################################
 Get-ChildItem "$PSScriptRoot/*.ps1" |
     ? { $_.Name -notlike "*.Tests.*" } |
     % { . $_.PSPath }
 
+## Prompt Adjustment ##########################################################
 
 if (Test-Path Function:\PromptBackup) {
     Write-Host "Backup Prompt function name is duplicationed" -ForegroundColor Cyan
@@ -18,17 +21,21 @@ function global:Prompt {
         # Fall back on existing Prompt function
         if (Test-Path Function:\PromptBackup) {
             PromptBackup
-        } 
+        }
     }
     catch {
         Write-Host "Error in .psenvrc. $($_.Exception.Message) >" -ForegroundColor Red
     }
 }
 
+## Aliases ####################################################################
+New-Alias source_up Search-DirEnvRC -Force
+
+## Exports ####################################################################
 Export-ModuleMember `
-    -Function @(
-    'Set-DirEnvRc'
-    'Edit-DirEnvRc'
-    'New-DirEnvRc'
-)
+    -Function `
+        Set-DirEnvRc, `
+        Edit-DirEnvRc, `
+        New-DirEnvRc, `
+        Prompt
 
