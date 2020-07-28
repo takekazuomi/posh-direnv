@@ -37,5 +37,10 @@ Export-ModuleMember `
         Set-DirEnvRc, `
         Edit-DirEnvRc, `
         New-DirEnvRc, `
+        Initialize-AllowList, `
+        Compare-DirEnvRc, `
+        Approve-DirEnvRc, `
+        Deny-DirEnvRc, `
+        Repair-DirEnvAuth, `
         Prompt
 

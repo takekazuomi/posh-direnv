@@ -27,7 +27,7 @@ Usage
    $ cd work
    $ Edit-DirEnvRc
 
-Since notepad starts up, edit .psdirenv. When you exit the editor .psdirenv is applied.
+Since notepad starts up, edit .psdirenv. When you exit the editor .psdirenv is authorised and applied if the file was modified.
 
 .. code-block:: posh
 
@@ -41,10 +41,21 @@ Activate the new powershell and check its operation. If you move to a directory 
 .. code-block:: posh
 
    $ cd work
+   psenvdir: loading work/.psenvrc
    Hello posh-direnv
+   psenvdir: export
 
-Once you exit the directory and move again. .psdirenv will not be executed. Re-execute with Set-DirEnvRc-Force.
+Once you exit the directory tree and move again the environment changes will be reversed and reapplied if you reenter the directory.
 
-Note
-====
-1. ".psdirenv" is executed unconditionally. Please be aware that it may contain malicious code. Basically it is recommended not to put it in the public repository such as github.
+If you edit the .psenvrc file yourself or move it between directories you must authorise it before it will be applied.
+
+.. code-block:: posh
+
+   $ cd work
+   psenvdir: work/.psenvrc not in allow list
+   $ Approve-DirEnvRc
+   psenvdir: loading work/.psenvrc
+   Hello posh-direnv
+   psenvdir: export
+
+You can unauthorise a .psenvrc file by calling Deny-DirEnvRc and cleanup the authorised list in the event directories are deleted before being denied by calling Repair-DirEnvAuth.
