@@ -23,8 +23,8 @@ function Compare-DirEnvRc {
         Write-Verbose "Need to initalise allow list"
         [void](Initialize-AllowList)
     }
-    if($global:psenvrcAllowList -ccontains (Get-FileHash $PsEnvRcFile -Algorithm MD5).Hash -and
-        ((Get-Content (Join-Path $psenvrcAuthDir (Get-FileHash $PsEnvRcFile -Algorithm MD5).Hash) -First 1) -eq $PsEnvRcFile)) {
+    if($global:psenvrcAllowList -ccontains (Get-FileHash $PsEnvRcFile -Algorithm SHA256).Hash -and
+        ((Get-Content (Join-Path $psenvrcAuthDir (Get-FileHash $PsEnvRcFile -Algorithm SHA256).Hash) -First 1) -eq $PsEnvRcFile)) {
             $rcFileAllowed = $true
     }
     return $rcFileAllowed
@@ -46,7 +46,7 @@ function Approve-DirEnvRc {
         $d = New-Item -Path $psenvrcAuthDir -ItemType "directory"
         $d.Attributes = $d.Attributes -bor "Hidden"
     }
-    Add-Content (Join-Path $psenvrcAuthDir (Get-FileHash $PsEnvRcFile -Algorithm MD5).Hash) $PsEnvRcFile
+    Add-Content (Join-Path $psenvrcAuthDir (Get-FileHash $PsEnvRcFile -Algorithm SHA256).Hash) $PsEnvRcFile
     Initialize-AllowList
 }
 
@@ -62,9 +62,9 @@ function Deny-DirEnvRc {
         Initialize-AllowList
     }
 
-    $global:psenvrcAllowList.Remove((Get-FileHash $PsEnvRcFile -Algorithm MD5).Hash)
-    if($psenvrcAuthDir -and (Test-Path (Join-Path $psenvrcAuthDir (Get-FileHash $PsEnvRcFile -Algorithm MD5).Hash))) {
-        Remove-Item -Force (Join-Path $psenvrcAuthDir (Get-FileHash $PsEnvRcFile -Algorithm MD5).Hash)
+    $global:psenvrcAllowList.Remove((Get-FileHash $PsEnvRcFile -Algorithm SHA256).Hash)
+    if($psenvrcAuthDir -and (Test-Path (Join-Path $psenvrcAuthDir (Get-FileHash $PsEnvRcFile -Algorithm SHA256).Hash))) {
+        Remove-Item -Force (Join-Path $psenvrcAuthDir (Get-FileHash $PsEnvRcFile -Algorithm SHA256).Hash)
     }
     Initialize-AllowList
 }
@@ -79,7 +79,7 @@ function Repair-DirEnvAuth {
     foreach($file in $currentFiles) {
         $allowedFile = Get-Content $file
         if(Test-Path $allowedFile) {
-            $allowedHash = (Get-FileHash $allowedFile -Algorithm MD5).Hash
+            $allowedHash = (Get-FileHash $allowedFile -Algorithm SHA256).Hash
             if($allowedHash -ne (Split-Path -Leaf $file)) {
                 Write-Verbose "$($allowedHash) != $(Split-Path -Leaf $file)"
                 Write-Verbose "Removing: $($file)"
