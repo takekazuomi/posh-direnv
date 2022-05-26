@@ -23,9 +23,12 @@ function Compare-DirEnvRc {
         Write-Verbose "Need to initalise allow list"
         [void](Initialize-AllowList)
     }
-    if($global:psenvrcAllowList -ccontains (Get-FileHash $PsEnvRcFile -Algorithm SHA256).Hash -and
-        ((Get-Content (Join-Path $psenvrcAuthDir (Get-FileHash $PsEnvRcFile -Algorithm SHA256).Hash) -First 1) -eq $PsEnvRcFile)) {
-            $rcFileAllowed = $true
+    if($global:psenvrcAllowList -ccontains (Get-FileHash $PsEnvRcFile -Algorithm SHA256).Hash) {
+        foreach($line in (Get-Content (Join-Path $psenvrcAuthDir (Get-FileHash $PsEnvRcFile -Algorithm SHA256).Hash))) {
+            if ($line -eq $PsEnvRcFile) {
+                $rcFileAllowed = $true
+            }
+        }
     }
     return $rcFileAllowed
 }
