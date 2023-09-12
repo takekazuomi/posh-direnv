@@ -7,7 +7,7 @@ Get-ChildItem "$PSScriptRoot/*.ps1" |
 ## Prompt Adjustment ##########################################################
 
 if (Test-Path Function:\PromptBackup) {
-    Write-Host "Backup Prompt function name is duplicationed" -ForegroundColor Cyan
+    Write-Host "Backup Prompt function name is duplicated" -ForegroundColor Cyan
 }
 
 if (Test-Path Function:\Prompt) {
@@ -25,6 +25,10 @@ function global:Prompt {
     }
     catch {
         Write-Host "Error in .psenvrc. $($_.Exception.Message) >" -ForegroundColor Red
+        # Fall back on existing Prompt function
+        if (Test-Path Function:\PromptBackup) {
+            PromptBackup
+        }
     }
 }
 

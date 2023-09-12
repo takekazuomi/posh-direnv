@@ -1,5 +1,5 @@
 # Managed the allowed .psenvrc file list
-Set-Variable -Name "psenvrcAuthDir" -Value (Join-Path $env:HOME .direnv) -Scope script -Option constant
+Set-Variable -Name "psenvrcAuthDir" -Value (Join-Path $env:UserProfile .direnv) -Scope script -Option constant
 [System.Collections.ArrayList]$global:psenvrcAllowList = @()
 
 function Initialize-AllowList {
